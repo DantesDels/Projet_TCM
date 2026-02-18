@@ -2,6 +2,7 @@ package cli;
 
 import cli.commands.AddProductCommand;
 import cli.commands.AddToCartCommand;
+import cli.commands.ShowCatalogueCommand;
 import models.ShoppingCart;
 import repository.InMemoryProductRepo;
 import repository.InMemoryUserRepo;
@@ -25,6 +26,7 @@ public class ConsoleApp {
         // Liste des commandes visibles/ajoutées
         menu.addCommand(new AddProductCommand(productRepository, scanner));
         menu.addCommand(new AddToCartCommand(cart, productRepository, scanner));
+        menu.addCommand(new ShowCatalogueCommand(productRepository));
 
         System.out.println("=== BIENVENUE SUR VOTRE SHOP V2.0 ===");
         menu.start();

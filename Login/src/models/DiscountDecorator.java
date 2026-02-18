@@ -10,7 +10,7 @@ public class DiscountDecorator extends ProductDecorator {
 
     @Override
     public void display() {
+        System.out.print(" [ PROMO -" + percentage + "% ]");
         decoratedProduct.display();
-        System.out.println(" [ PROMO -" + percentage + "% ]");
     }
 }

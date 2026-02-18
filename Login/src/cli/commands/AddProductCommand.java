@@ -16,7 +16,6 @@ public class AddProductCommand implements Command {
         this.scanner = scanner;
     }
 
-
     @Override
     public String getLabel() {
         return "Ajouter un nouveau produit au catalogue"; // Rôle Admin
