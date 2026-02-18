@@ -1,6 +1,7 @@
 package cli;
 
 import repository.InMemoryProductRepo;
+import repository.InMemoryUserRepo;
 import repository.ProductRepository;
 import repository.UserRepository;
 
@@ -15,7 +16,7 @@ public class ConsoleApp {
 
         SeedData.init(productRepo, userRepo);
 
-        MenuHandler menu = new MenuHandler(scanner, productRepo, userRepo);
+        MenuHandler menu = new MenuHandler(scanner);
 
         System.out.println("=== BIENVENUE SUR VOTRE SHOP V2.0 ===");
         menu.start(); // Lance la boucle while(true)

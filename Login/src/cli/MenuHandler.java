@@ -2,6 +2,8 @@ package cli;
 
 import core.Command;
 import models.User;
+import repository.ProductRepository;
+import repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
