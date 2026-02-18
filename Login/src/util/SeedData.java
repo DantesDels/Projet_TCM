@@ -1,5 +1,6 @@
 package util;
 
+import factory.UserBuilder;
 import models.*;
 import repository.ProductRepository;
 import repository.UserRepository;
@@ -15,7 +16,21 @@ public class SeedData {
         savePromo(productRepo, "Casquette Vintage", 15.50, 50);
         savePromo(productRepo, "Sweat à capuche", 45.00, 10);
 
-        userRepo.save(new User("admin@shop.fr", "admin123", "ADMIN"));
+        // Création d'un Admin avec le Builder
+        User admin = new UserBuilder()
+                .withName("Admin")
+                .withEmail("admin@shop.fr")
+                .withRole("ADMIN")
+                .build();
+
+        // Création d'un Client (le rôle sera "CLIENT" par défaut)
+        User client = new UserBuilder()
+                .withName("Jean Dupont")
+                .withEmail("jean@gmail.com")
+                .build();
+
+        userRepo.save(admin);
+        userRepo.save(client);
 
         System.out.println("[Système] Données chargées.");
     }
