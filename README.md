@@ -1,64 +1,103 @@
-# Projet_TCM
-Personal project for Advanced POO
+# 🛒 Projet TCM - E-Commerce Console App
 
-### 📁 src/main/java/com/shop
+Ce projet est une application de gestion de vente de vêtements en ligne de commande. Il implémente une architecture 
+modulaire respectant les principes de la **Programmation Orientée Objet** et les **Design Patterns** requis par 
+la grille d'évaluation.
 
-#### 📦 core (Abstractions & Contrats)
-- `ShopItem.java`           | **Interface** | Composant de base du pattern Composite.
-- `Command.java`            | **Interface** | Contrat pour les actions du menu (Pattern Command).
-- `DiscountStrategy.java`   | **Interface** | Contrat pour le calcul des remises (Pattern Strategy).
+---
 
-#### 📦 models (Objets de données)
-- `Product.java`            | **Classe** | Implémente `ShopItem`. Gère `equals()`/`hashCode()`.
-- `ClothingCollection.java` | **Classe** | Le Composite. Liste récursive de `ShopItem`.
-- `User.java`               | **Classe** | Modèle utilisateur (inclut le `UserBuilder`).
-- `ShoppingCart.java`       | **Classe** | Gestion du panier (`Map<ShopItem, Integer>`).
-- `UserRole.java`           | **Enum** | Définit les rôles : `ADMIN`, `CLIENT`.
+## 🚀 Lancement rapide avec IntelliJ IDEA
 
-#### 📦 factory (Patterns de Création)
-- `ClothingFactory.java`    | **Classe** | Création centralisée via méthode `static`.
-- `UserBuilder.java`        | **Classe** | Pattern Builder pour l'instanciation de `User`.
+Puisque le projet est structuré pour **IntelliJ IDEA**, vous n'avez pas besoin d'utiliser le terminal pour compiler ou lancer l'application. L'IDE gère automatiquement le cycle de vie du projet.
 
-#### 📦 repository (Accès aux données)
-- `ProductRepository.java`  | **Interface** | Abstraction du stockage des produits.
-- `InMemoryProductRepo.java`| **Classe** | Implémentation concrète du stockage en mémoire.
-- `UserRepository.java`     | **Interface** | Abstraction du stockage des utilisateurs.
+### Lancer l'application :
 
-#### 📦 services (Logique métier - SRP)
-- `AuthService.java`        | **Interface** | Contrat pour la sécurité et l'accès.
-- `AuthServiceImpl.java`    | **Classe** | Implémentation de la logique de connexion.
-- `OrderService.java`       | **Classe** | Service de traitement des commandes.
+1. **Localiser le point d'entrée** : Dans l'explorateur de projet (à gauche), naviguez vers le dossier `src/cli/`.
+2. **Exécuter la classe principale** : Faites un **clic droit** sur le fichier `ConsoleApp.java`.
+3. **Lancer** : Sélectionnez l'option **Run 'ConsoleApp.main()'** dans le menu contextuel.
+4. **Utilisation** : L'interface en ligne de commande s'ouvrira directement dans l'onglet **Run** en bas de votre IDE.
 
-#### 📦 cli (Interface Utilisateur)
-- `ConsoleApp.java`         | **Classe** | Point d'entrée (`main`) de l'application.
-- `MenuHandler.java`        | **Classe** | Orchestrateur des menus et des commandes.
-- **📂 commands** (Implémentations du Pattern Command)
-    - `AddProductCommand.java`       | **Classe** | Action Admin : Ajout au stock.
-    - `CreateCollectionCommand.java`  | **Classe** | Action Admin : Création de pack.
-    - `LoginCommand.java`            | **Classe** | Action Commune : Authentification.
-    - `AddToCartCommand.java`        | **Classe** | Action Client : Achat de produits.
+> **Note :** IntelliJ s'occupe de la compilation automatique vers le dossier `out/`. Si vous rencontrez des erreurs de symboles non reconnus, faites `Build > Rebuild Project` (situé dans les onglets en bas à gauche de l'IDE IntelliJ).
 
-## ⚖️ Gestion des Quantités et Responsabilités
+---
 
-Une attention particulière a été portée à la séparation entre la **définition d'un produit** et son **usage dans un panier**.
+### 🗓️ Suivi Weekly Reset
+- [x] **Documentation** : Ajout de la procédure de lancement simplifiée via IntelliJ.
+- [x] **Environnement** : Validation du dossier `src` comme racine des sources.
+- [ ] **Test** : Vérifier que le catalogue s'affiche correctement dans la console de l'IDE.
+---
+## 📂 Structure du Projet (Packages)
 
-### 1. Pourquoi la quantité n'est pas dans l'interface `ShopItem` ?
-Conformément aux principes **SOLID**, l'interface `ShopItem` (Pattern Composite) ne contient pas de méthode `getQuantity()`.
-- **Principe ISP (Interface Segregation) :** Un produit du catalogue n'a pas besoin de connaître une quantité d'achat pour définir son prix ou son nom.
-- **Principe SRP (Single Responsibility) :** La responsabilité de suivre le volume d'achat incombe au panier (`ShoppingCart`), et non au modèle de données (`Product`).
+L'organisation des fichiers suit une séparation stricte des responsabilités :
+* **`cli`** : Interface utilisateur, contenant le `ConsoleApp`, le `MenuHandler` et les commandes.
+* **`core`** : Contrats et interfaces de base (`Command`, `DiscountStrategy`).
+* **`factory`** : Logique de création (`ProductFactory`, `UserBuilder`).
+* **`models`** : Entités métier (Héritage `BaseEntity`, `Product`, `User`) et pattern **Decorator**.
+* **`repository`** : Persistance en mémoire via `InMemoryProductRepo` et `InMemoryUserRepo`.
+* **`services`** : Traitements transverses comme `OrderService`.
+* **`util`** : Initialisation des données via `SeedData`.
 
-### 2. Implémentation technique via `Map`
-La gestion des quantités est centralisée dans la classe `ShoppingCart` en utilisant une structure de données `Map<ShopItem, Integer>`.
+---
 
-| Composant | Rôle |
+## ⚖️ Validation des principes POO & SOLID
+
+Ce projet a été conçu pour respecter les standards de qualité logicielle les plus élevés, en appliquant les principes **SOLID** pour garantir un code modulaire et évolutif.
+
+### 🏗️ Fondamentaux de la POO
+
+| Concept | Preuve dans le code |
 | :--- | :--- |
-| **Clé (`ShopItem`)** | L'objet unique (Produit ou Collection) identifié par son `equals()` et `hashCode()`. |
-| **Valeur (`Integer`)** | Le multiplicateur représentant la quantité saisie par l'utilisateur. |
+| **Héritage** | Utilisation d'une hiérarchie à trois niveaux : `BaseEntity` (gestion des UUID) -> `Product` (classe parente) -> `Clothing` (classe concrète instanciée). |
+| **Polymorphisme** | Dans `ShowCatalogueCommand`, l'appel `p.display()` exécute dynamiquement la méthode appropriée, que l'objet soit un produit simple ou un produit décoré d'une promotion. |
+| **Abstraction** | Les classes `Product` et `ProductDecorator` sont marquées `abstract` pour définir un contrat strict et empêcher l'instanciation d'objets incohérents. |
+| **Encapsulation** | Les attributs `name` et `price` sont protégés (accès via getters/setters), garantissant que l'état interne des objets n'est pas modifié de manière directe. |
 
-#### Exemple de logique de calcul :
-```java
-public double calculateTotal() {
-    return items.entrySet().stream()
-                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
-                .sum();
-}
+### 🛡️ Principes SOLID
+
+| Principe | Application Concrète dans le Code |
+| :--- | :--- |
+| **S - Single Responsibility** | Chaque classe possède une responsabilité unique : le `UserBuilder` s'occupe de la création d'utilisateurs, les `Commands` (ex: `AddProductCommand`) gèrent les actions du menu, et les `InMemoryRepos` gèrent le stockage. |
+| **O - Open/Closed** | Le système est **fermé à la modification** (on ne touche plus à `Product.java`) mais **ouvert à l'extension** : l'ajout d'une promotion via le `DiscountDecorator` se fait sans modifier le code existant. |
+| **L - Liskov Substitution** | Le `DiscountDecorator` hérite de `ProductDecorator`, lui-même héritant de `Product`. Il peut donc remplacer n'importe quel produit dans le catalogue ou le panier sans altérer le comportement global. |
+| **I - Interface Segregation** | L'interface `Command` dans le package `core` est minimaliste (une seule méthode `execute()`). Les classes qui l'implémentent ne sont pas forcées de définir des méthodes dont elles n'ont pas besoin. |
+| **D - Dependency Inversion** | Les classes de haut niveau (dans `cli.commands`) dépendent des interfaces (dans `repository.ProductRepository`) et non des implémentations concrètes. Cela facilite le passage à une base de données réelle. |
+
+---
+
+## 🛠️ Design Patterns Implémentés
+
+### 1. Patterns de Création
+* **UserBuilder** : Permet la construction fluide des utilisateurs avec des rôles par défaut (ex: `CLIENT`).
+* **ProductFactory** : Centralise l'instanciation des objets pour isoler la logique de création.
+
+### 2. Pattern de Structure
+* **Decorator** : Implémenté via `DiscountDecorator`. Il permet d'ajouter dynamiquement des badges de promotion au catalogue sans modifier la classe de base `Product`.
+
+### 3. Pattern de Comportement
+* **Command** : Chaque action (ex: `AddProductCommand`, `ShowCatalogueCommand`) est encapsulée, découplant le menu de la logique métier.
+
+---
+
+## ⚙️ Correction de l'affichage
+Pour corriger l'affichage décalé constaté dans le catalogue, les méthodes ont été ajustées ainsi :
+
+1. **Dans `Product.java`** : La méthode `display(String indent)` utilise `System.out.print` au lieu de `println` pour maintenir le curseur sur la ligne.
+2. **Dans `DiscountDecorator.java`** : La méthode appelle `decoratedProduct.display()` puis ajoute le badge promo sur la même ligne avant de conclure par un `println`.
+
+---
+
+## 🗺️ Roadmap de Développement
+
+### Phase 1 : Consolidation Métier (Court terme)
+* **Calcul de prix dynamique** : Intégrer la réduction mathématique dans `DiscountDecorator.getPrice()`.
+* **Sécurité & Rôles** : Restreindre l'accès à `AddProductCommand` aux seuls utilisateurs `ADMIN`.
+
+### Phase 2 : Persistance & Données (Moyen terme)
+* **Format JSON** : Implémenter un `JsonProductRepository` pour sauvegarder les données sur le disque.
+* **Gestion du chargement** : Support de l'ID existant dans `BaseEntity` lors de la désérialisation.
+
+### Phase 3 : Qualité (Finalisation)
+* **Diagramme UML** : Générer la vue technique de l'architecture pour expliquer aux clients.
+* **Gestion d'erreurs** : Remplacer les sorties brutales par une gestion d'exceptions (`try-catch`).
+
+---
