@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-public abstract class Product extends BaseEntity {
+public class Product extends BaseEntity {
     // Pas de Final pour permettre la modification future de ces attributs.
     private String name;
     private double price;

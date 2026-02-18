@@ -1,7 +1,7 @@
 package cli.commands;
 
 import core.Command;
-import factory.ClothingFactory;
+import factory.ProductFactory;
 import models.Product;
 import repository.ProductRepository;
 
@@ -33,7 +33,7 @@ public class AddProductCommand implements Command {
         double price = Double.parseDouble(scanner.nextLine());
 
         // Utilisation de la Factory pour créer l'objet
-        Product newProduct = ClothingFactory.createProduct(name, price);
+        Product newProduct = ProductFactory.createProduct(name, price);
 
         // Sauvegarde dans le repository
         productRepository.save(newProduct);

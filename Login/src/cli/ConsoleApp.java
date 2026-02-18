@@ -2,7 +2,6 @@ package cli;
 
 import cli.commands.AddProductCommand;
 import cli.commands.AddToCartCommand;
-import models.Product;
 import models.ShoppingCart;
 import repository.InMemoryProductRepo;
 import repository.InMemoryUserRepo;
