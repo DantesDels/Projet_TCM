@@ -14,7 +14,7 @@ public class ConsoleApp {
         ProductRepository productRepo = new InMemoryProductRepo();
         UserRepository userRepo = new InMemoryUserRepo();
 
-        SeedData.init(productRepo, userRepo);
+        util.SeedData.init(productRepo, userRepo);
 
         MenuHandler menu = new MenuHandler(scanner);
 

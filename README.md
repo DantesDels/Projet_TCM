@@ -2,40 +2,6 @@
 Personal project for Advanced POO
 
 ### 📁 src/main/java/com/shop
-#### 📦 core (Interfaces et abstractions)
-- `ShopItem.java` : Interface commune (Composite) pour Product et Collection.
-- `Command.java` : Interface pour le Pattern Command (Menu CLI).
-- `DiscountStrategy.java` : Interface pour les promotions (Strategy).
-
-#### 📦 models (Données)
-- `Product.java` : Classe de base (T-shirt, Pantalon) avec equals/hashCode.
-- `ClothingCollection.java` : Le Composite (liste de ShopItem).
-- `User.java` : Modèle utilisateur avec son ShoppingCart.
-- `ShoppingCart.java` : Gestion de la Map<ShopItem, Integer>.
-
-#### 📦 factory (Pattern de Création)
-- `ClothingFactory.java` : Méthode static pour créer les produits.
-- `UserBuilder.java` : Builder fluide pour la création d'utilisateurs.
-
-#### 📦 repository (Stockage en mémoire)
-- `ProductRepository.java` : Stocke la liste des produits/collections dispos.
-- `UserRepository.java` : Stocke les comptes clients créés.
-
-#### 📦 services (Logique métier - SRP)
-- `AuthService.java` : Inscription et connexion.
-- `OrderService.java` : Validation du panier et calcul du prix total.
-
-#### 📦 cli (Interface utilisateur - Command Pattern)
-- `ConsoleApp.java` : Le point d'entrée (Main).
-- `MenuHandler.java` : Affiche les menus et exécute les commandes.
-##### 📂 commands (Implémentations des actions)
-- `AddProductCommand.java` (Admin)
-- `CreateCollectionCommand.java` (Admin)
-- `LoginCommand.java` (Client)
-- `AddToCartCommand.java` (Client)
-
-
-### 📁 src/main/java/com/shop
 
 #### 📦 core (Abstractions & Contrats)
 - `ShopItem.java`           | **Interface** | Composant de base du pattern Composite.
@@ -71,3 +37,28 @@ Personal project for Advanced POO
     - `CreateCollectionCommand.java`  | **Classe** | Action Admin : Création de pack.
     - `LoginCommand.java`            | **Classe** | Action Commune : Authentification.
     - `AddToCartCommand.java`        | **Classe** | Action Client : Achat de produits.
+
+## ⚖️ Gestion des Quantités et Responsabilités
+
+Une attention particulière a été portée à la séparation entre la **définition d'un produit** et son **usage dans un panier**.
+
+### 1. Pourquoi la quantité n'est pas dans l'interface `ShopItem` ?
+Conformément aux principes **SOLID**, l'interface `ShopItem` (Pattern Composite) ne contient pas de méthode `getQuantity()`.
+- **Principe ISP (Interface Segregation) :** Un produit du catalogue n'a pas besoin de connaître une quantité d'achat pour définir son prix ou son nom.
+- **Principe SRP (Single Responsibility) :** La responsabilité de suivre le volume d'achat incombe au panier (`ShoppingCart`), et non au modèle de données (`Product`).
+
+### 2. Implémentation technique via `Map`
+La gestion des quantités est centralisée dans la classe `ShoppingCart` en utilisant une structure de données `Map<ShopItem, Integer>`.
+
+| Composant | Rôle |
+| :--- | :--- |
+| **Clé (`ShopItem`)** | L'objet unique (Produit ou Collection) identifié par son `equals()` et `hashCode()`. |
+| **Valeur (`Integer`)** | Le multiplicateur représentant la quantité saisie par l'utilisateur. |
+
+#### Exemple de logique de calcul :
+```java
+public double calculateTotal() {
+    return items.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
+}

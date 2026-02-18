@@ -5,9 +5,12 @@ public class User {
     private String email;
     private ShoppingCart shoppingCart;
 
-    public User() {
+    public String role;
+
+    public User(String name, String email, String role) {
         this.name = "";
         this.email = "";
+        this.role = "";
         this.shoppingCart = new ShoppingCart();
     }
 
