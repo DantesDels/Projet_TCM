@@ -2,8 +2,6 @@ package cli;
 
 import core.Command;
 import models.User;
-import repository.ProductRepository;
-import repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,6 @@ public class MenuHandler {
     private final List<Command> commands = new ArrayList<>();
     private final Scanner scanner;
     private boolean running = true;
-    private User currentUser;
 
     public MenuHandler(Scanner scanner) {
         this.scanner = scanner;
