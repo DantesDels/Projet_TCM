@@ -1,6 +1,6 @@
 package models;
 
-public class User {
+public class User extends BaseEntity {
     private String name;
     private String email;
     private ShoppingCart shoppingCart;
@@ -8,6 +8,7 @@ public class User {
     public String role;
 
     public User(String name, String email, String role) {
+        super();
         this.name = "";
         this.email = "";
         this.role = "";

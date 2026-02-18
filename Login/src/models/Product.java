@@ -2,15 +2,13 @@ package models;
 
 import java.util.Objects;
 
-public class Product {
+public abstract class Product extends BaseEntity {
     // Pas de Final pour permettre la modification future de ces attributs.
     private String name;
     private double price;
 
     public Product(String name, double price) {
-        if (price < 0) {
-            throw new IllegalArgumentException("Le prix ne peut pas être négatif");
-        }
+        super();
         this.name = name;
         this.price = price;
     }
@@ -21,8 +19,14 @@ public class Product {
         return this.price;
     }
 
+    // Affichage simple
     public void display(String indent) {
         System.out.println(indent + "- " + name + " : " + price + "€");
+    }
+
+    // Affichage pour décorateur
+    public void display(){
+        this.display("");
     }
 
     public boolean equals(Object object) {
@@ -36,11 +40,6 @@ public class Product {
         Product product = (Product) object;
         return Double.compare(product.price, price) == 0 &&
                 Objects.equals(name, product.name);
-    }
-
-    public int hashCode() {
-        // Génère un hash unique basé sur le nom et le prix
-        return Objects.hash(name, price);
     }
 
     public void setPrice(double price) {
