@@ -25,6 +25,9 @@ public class AddProductCommand implements Command {
     public void execute() {
         System.out.println("\n--- Ajout d'un produit ---");
 
+        System.out.print("Type du produit : ");
+        String type = scanner.nextLine();
+
         System.out.print("Nom du produit : ");
         String name = scanner.nextLine();
 
@@ -32,7 +35,7 @@ public class AddProductCommand implements Command {
         double price = Double.parseDouble(scanner.nextLine());
 
         // Utilisation de la Factory pour créer l'objet
-        Product newProduct = ProductFactory.createProduct(name, price);
+        Product newProduct = ProductFactory.createProduct(type, name, price);
 
         // Sauvegarde dans le repository
         productRepository.save(newProduct);

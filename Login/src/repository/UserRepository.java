@@ -6,14 +6,13 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    // Sauvegarder un nouvel utilisateur (ex: Inscription)
+    // Sauvegarder un nouvel utilisateur (Inscription)
     void save(User user);
 
-    // Trouver un utilisateur par son email (Indispensable pour le Login)
-    // Optional pour gérer proprement le cas "Utilisateur non trouvé"
+    // Trouver un utilisateur par son email (Login)
     Optional<User> findByEmail(String email);
 
-    // Récupérer tous les utilisateurs (Utile pour une vue Admin)
+    // Récupérer tous les utilisateurs (Admin)
     List<User> findAll();
 
     // Supprimer un compte

@@ -1,17 +1,17 @@
 package factory;
 
 import models.Product;
+import models.Clothing;
 
 public class ProductFactory {
-    private String name;
-    private double price;
 
-    public ProductFactory(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
+    public static Product createProduct(String type, String name, double price) {
+        if (type == null) return null;
 
-    public static Product createProduct(String name, double price) {
-        return new Product(name, price);
+        return switch (type.toUpperCase()) {
+            case "CLOTHING" -> new Clothing(name, price);
+            // case "CHAUSSURES" -> new Chaussures(args) SI Classe "Chaussures" créée.
+            default -> throw new IllegalArgumentException("Type de produit inconnu : " + type);
+        };
     }
 }

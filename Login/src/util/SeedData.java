@@ -11,7 +11,7 @@ public class SeedData {
         // Produits normaux
         productRepo.save(new Clothing("T-shirt Oversize", 29.99));
 
-        // Produits en promo via notre helper
+        // Produits en promo
         savePromo(productRepo, "Jean Denim Bleu", 59.90, 20);
         savePromo(productRepo, "Casquette Vintage", 15.50, 50);
         savePromo(productRepo, "Sweat à capuche", 45.00, 10);
@@ -23,7 +23,7 @@ public class SeedData {
                 .withRole("ADMIN")
                 .build();
 
-        // Création d'un Client (le rôle sera "CLIENT" par défaut)
+        // Création d'un Client (rôle "CLIENT" par défaut)
         User client = new UserBuilder()
                 .withName("Jean Dupont")
                 .withEmail("jean@gmail.com")
@@ -31,8 +31,6 @@ public class SeedData {
 
         userRepo.save(admin);
         userRepo.save(client);
-
-        System.out.println("[Système] Données chargées.");
     }
 
     private static void savePromo(ProductRepository repo, String name, double price, int percentDiscount) {
