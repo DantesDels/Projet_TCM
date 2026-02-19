@@ -20,12 +20,6 @@ Puisque le projet est structuré pour **IntelliJ IDEA**, vous n'avez pas besoin 
 > **Note :** IntelliJ s'occupe de la compilation automatique vers le dossier `out/`. Si vous rencontrez des erreurs de symboles non reconnus, faites `Build > Rebuild Project` (situé dans les onglets en bas à gauche de l'IDE IntelliJ).
 
 ---
-
-### 🗓️ Suivi Weekly Reset
-- [x] **Documentation** : Ajout de la procédure de lancement simplifiée via IntelliJ.
-- [x] **Environnement** : Validation du dossier `src` comme racine des sources.
-- [ ] **Test** : Vérifier que le catalogue s'affiche correctement dans la console de l'IDE.
----
 ## 📂 Structure du Projet (Packages)
 
 L'organisation des fichiers suit une séparation stricte des responsabilités :

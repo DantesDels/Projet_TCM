@@ -28,11 +28,11 @@ public class ShowCatalogueCommand implements Command {
             return;
         }
 
-        for (Product p : products) {
+        for (Product product : products) {
             // Java va chercher dynamiquement la méthode display() :
             // - Celle de Product si c'est un produit simple
             // - Celle de DiscountDecorator si le produit est décoré
-            p.display();
+            product.display();
         }
 
         System.out.println("------------------------------\n");
